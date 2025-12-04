@@ -12,6 +12,7 @@ import {
   Users
 } from 'lucide-react';
 import { Application, Feature } from './types';
+import VerdeVisualization from './VerdeVisualization';
 
 // --- Components ---
 
@@ -477,29 +478,9 @@ const App: React.FC = () => {
             </RevealOnScroll>
 
             <RevealOnScroll className="relative">
-              <div className="glass-card rounded-[2rem] p-1 border border-[#eed2cc]/10 aspect-square flex items-center justify-center relative">
-                <div className="absolute inset-0 bg-gradient-to-tr from-[#1d4ed8]/20 to-transparent rounded-[2rem]"></div>
-
-                {/* Abstract Visualization of Verification */}
-                <div className="relative w-3/4 h-3/4 grid grid-cols-2 gap-4">
-                  <div className="bg-[#200b01]/60 backdrop-blur-sm rounded-xl border border-[#eed2cc]/10 p-6 flex flex-col justify-between">
-                    <Cpu className="text-[#eed2cc] w-8 h-8 opacity-80" />
-                    <span className="text-sm text-[#eed2cc]/60">Solver</span>
-                  </div>
-                  <div className="bg-[#200b01]/60 backdrop-blur-sm rounded-xl border border-[#eed2cc]/10 p-6 flex flex-col justify-between">
-                    <ShieldCheck className="text-[#1d4ed8] w-8 h-8 opacity-80" />
-                    <span className="text-sm text-[#eed2cc]/60">Verifier</span>
-                  </div>
-                  <div className="col-span-2 bg-[#eed2cc]/5 rounded-xl border border-[#eed2cc]/10 p-6 flex items-center justify-between">
-                    <div className="flex flex-col">
-                      <span className="text-[#eed2cc] font-display text-xl">State Hash</span>
-                      <span className="text-[#eed2cc]/40 text-xs font-mono">0x7f...3a2b</span>
-                    </div>
-                    <div className="h-2 w-24 bg-[#200b01] rounded-full overflow-hidden">
-                      <div className="h-full bg-[#1d4ed8] w-[80%]"></div>
-                    </div>
-                  </div>
-                </div>
+              <div className="glass-card rounded-[2rem] p-1 border border-[#eed2cc]/10 aspect-square flex items-center justify-center relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#1d4ed8]/20 to-transparent rounded-[2rem] pointer-events-none"></div>
+                <VerdeVisualization />
               </div>
             </RevealOnScroll>
           </div>
