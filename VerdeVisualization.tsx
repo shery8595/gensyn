@@ -28,7 +28,7 @@ const VerdeVisualization: React.FC = () => {
 
     // Phase durations in ms
     const DURATIONS = {
-        IDLE: 1500,
+        IDLE: 2000,
         DISAGREEMENT: 4500,
         BISECTION_ITERATION: 6000,
         BISECTION_OPERATION: 6000,
