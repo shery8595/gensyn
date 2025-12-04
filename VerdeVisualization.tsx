@@ -20,17 +20,19 @@ const PHASES: Phase[] = ['IDLE', 'DISAGREEMENT', 'BISECTION_ITERATION', 'BISECTI
 
 const VerdeVisualization: React.FC = () => {
     const [phase, setPhase] = useState<Phase>('IDLE');
-    const [isPlaying, setIsPlaying] = useState(true);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [hasStarted, setHasStarted] = useState(false);
     const [progress, setProgress] = useState(0); // 0-100 for current phase
     const timerRef = useRef<number | null>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // Phase durations in ms
     const DURATIONS = {
-        IDLE: 1000,
-        DISAGREEMENT: 3000,
-        BISECTION_ITERATION: 4000,
-        BISECTION_OPERATION: 4000,
-        RESOLUTION: 3000
+        IDLE: 1500,
+        DISAGREEMENT: 4500,
+        BISECTION_ITERATION: 6000,
+        BISECTION_OPERATION: 6000,
+        RESOLUTION: 4500
     };
 
     const nextPhase = () => {
@@ -44,7 +46,27 @@ const VerdeVisualization: React.FC = () => {
         setPhase('IDLE');
         setProgress(0);
         setIsPlaying(true);
+        setHasStarted(true);
     };
+
+    // Start animation when in view
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting && !hasStarted) {
+                    setIsPlaying(true);
+                    setHasStarted(true);
+                }
+            },
+            { threshold: 0.5 }
+        );
+
+        if (containerRef.current) {
+            observer.observe(containerRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, [hasStarted]);
 
     useEffect(() => {
         if (!isPlaying) return;
@@ -56,6 +78,10 @@ const VerdeVisualization: React.FC = () => {
         timerRef.current = window.setInterval(() => {
             setProgress(prev => {
                 if (prev >= 100) {
+                    if (phase === 'RESOLUTION') {
+                        setIsPlaying(false);
+                        return 100;
+                    }
                     nextPhase();
                     return 0;
                 }
@@ -276,7 +302,7 @@ const VerdeVisualization: React.FC = () => {
     );
 
     return (
-        <div className="w-full h-full relative overflow-hidden bg-[#150701]/50 backdrop-blur-sm">
+        <div ref={containerRef} className="w-full h-full relative overflow-hidden bg-[#150701]/50 backdrop-blur-sm">
             {/* Background Grid */}
             <div className="absolute inset-0 opacity-10"
                 style={{
