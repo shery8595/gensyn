@@ -446,9 +446,7 @@ const App: React.FC = () => {
                 <span className="text-[#1d4ed8]">The Verde Protocol</span>
               </h2>
               <p className="text-xl text-[#eed2cc]/80 mb-8 leading-relaxed">
-                Verde enables bitwise-exact reproducibility across any hardware.
-                Disputes are resolved by pinpointing the exact operation in question,
-                eliminating the need to re-run entire tasks.
+                Verde ensures consistent results across all hardware and pinpoints exactly where problems occur, avoiding the need to recheck everything.
               </p>
 
               <ul className="space-y-6 mb-10">
